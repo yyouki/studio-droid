@@ -123,8 +123,8 @@ Only after that works should the project add PSI-backed language intelligence or
 ## 6. RAM policy
 
 The requested product rule remains:
-- Total RAM **at or below 6 GiB**: default to `LOW_MEMORY`.
-- Total RAM **above 6 GiB**: default to `STANDARD`; do not apply StudioDroid's special low-memory reductions.
+- Total RAM **at or below 6 GB**: default to `LOW_MEMORY`.
+- Total RAM **above 6 GB**: default to `STANDARD`; do not apply StudioDroid's special low-memory reductions.
 
 The low-memory profile should schedule less concurrent indexing/build work and bound caches, not silently remove editor or language features. Android system memory pressure and OEM process management remain relevant in either profile.
 
