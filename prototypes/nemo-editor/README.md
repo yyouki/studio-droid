@@ -51,6 +51,8 @@ Latest verified run: [Build Nemo Editor Prototype #4](https://github.com/yyouki/
 - [ ] Test a source file with approximately 1,000 lines.
 - [ ] Record app responsiveness and peak memory use if possible.
 
+The maintainer reports that the first five device checks passed. See [the Phase 1 device test report](../../docs/PHASE-1-DEVICE-TEST.md).
+
 ## Decision gate
 
 Do not move Nemo into the main app until:
