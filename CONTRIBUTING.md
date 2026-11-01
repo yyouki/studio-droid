@@ -37,7 +37,7 @@ A component being visible on a public Git repository does not automatically mean
 Changes to memory policies must:
 - Preserve supported user-facing features.
 - Include measurements or a reproducible test plan.
-- Test the LOW_MEMORY behavior at or below the 6 GiB threshold.
+- Test the LOW_MEMORY behavior at or below the 6 GB threshold.
 - Confirm that devices above the threshold keep the STANDARD profile.
 - Explain any change to caches, indexing, worker counts, or background scheduling.
 
