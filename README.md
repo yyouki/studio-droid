@@ -2,7 +2,7 @@
 
 **An Android re-platforming research project inspired by Android Studio Desktop.**
 
-StudioDroid aims to bring an Android Studio-like development environment directly to Android phones. The project will investigate which parts of the Android Studio and IntelliJ codebases can be reused, adapted, or replaced with Android-native components.
+StudioDroid aims to bring an Android Studio-like development environment directly to Android phones. The project investigates which parts of the Android Studio and IntelliJ codebases can be reused, adapted, or replaced with Android-native components.
 
 > **Unofficial project:** StudioDroid is not affiliated with, endorsed by, or an official product of Google or JetBrains. Android Studio and IntelliJ are trademarks of their respective owners.
 
@@ -43,26 +43,30 @@ The reference device is a test target, not the minimum supported device specific
 
 ## Technical direction
 
-The project will investigate:
+The project investigates:
 - Android Studio source components and their licensing.
 - IntelliJ Platform dependencies and desktop-only assumptions.
 - An Android-native host application and lifecycle integration.
 - Editor, project model, Gradle, language tooling, and debugging compatibility.
 - ARM64 availability of required runtimes and native dependencies.
 
-Android Studio's source build documentation identifies the Android plugin, IntelliJ IDE base, and shared libraries as major source areas. It also documents a Bazel-based build workflow. This does **not** mean the desktop IDE can run on Android unchanged. See [Android Studio source build notes](https://android.googlesource.com/platform/tools/base/+/mirror-goog-studio-main/studio.md).
+Android Studio's source build documentation identifies the Android plugin, IntelliJ IDE base, and shared libraries as major source areas. It also documents a multi-repository checkout and Bazel-based build workflow. This does **not** mean the desktop IDE can run on Android unchanged.
 
 ## Current status
 
-**Stage: feasibility and architecture planning.** This repository does not contain a working IDE or installable APK yet. No desktop source has been copied into this repository; upstream compatibility and license audits must happen before source reuse.
+**Stage: Phase 0 — preliminary source audit.** The audit identifies the desktop UI, runtime, and host toolchain as major porting boundaries. No desktop source has been copied, no Android module has passed an ART/ARM64 compatibility test, and no APK is available yet.
 
-See:
+Read the [Phase 0 feasibility audit](docs/PHASE-0-AUDIT.md) before proposing source reuse.
+
+## Documentation
+
+- [Phase 0 source and feasibility audit](docs/PHASE-0-AUDIT.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Memory profiles](docs/MEMORY-PROFILES.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Contribution guide](CONTRIBUTING.md)
 - [AI agent instructions](AGENTS.md)
-- [Third-party audit](THIRD_PARTY_NOTICES.md)
+- [Third-party source and license audit](THIRD_PARTY_NOTICES.md)
 
 ## Development approach
 
