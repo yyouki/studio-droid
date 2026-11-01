@@ -6,13 +6,17 @@ This roadmap is evidence-driven. A phase is complete only when its acceptance cr
 
 - [x] Create public repository and initial product specification.
 - [x] Record the two-profile RAM policy.
-- [ ] Pin candidate Android Studio and IntelliJ source revisions.
-- [ ] Map module dependencies and build requirements.
-- [ ] Audit source and dependency licenses.
-- [ ] Identify desktop-only APIs, native binaries, and ARM64 gaps.
-- [ ] Publish a component compatibility matrix.
+- [x] Identify Android Studio source checkout areas and their roles.
+- [x] Capture preliminary manifest, Android plugin, and shared-tools source snapshots.
+- [x] Publish a preliminary compatibility matrix and major platform blockers.
+- [ ] Sync the exact manifest and capture the precise current `tools/idea` project SHA.
+- [ ] Complete module-level dependency and native-library mapping.
+- [ ] Complete current-branch license and notice audit for all candidate source modules.
+- [ ] Test at least one candidate library on Android Runtime / ARM64.
 
-**Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android.
+**Progress:** Preliminary audit published in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md). The report identifies the desktop UI, host toolchain, and runtime boundaries. Phase 0 remains open because exact source pinning, per-module dependency/license audits, and Android runtime tests are not yet complete.
+
+**Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence.
 
 ## Phase 1 — Android host proof of concept
 
