@@ -6,14 +6,14 @@ StudioDroid has one application and two default runtime profiles:
 
 | Total physical RAM | Profile | Expected behavior |
 | --- | --- | --- |
-| `<= 6 GiB` | `LOW_MEMORY` | Apply memory and concurrency controls. |
-| `> 6 GiB` | `STANDARD` | Preserve standard component behavior; do not apply low-memory reductions. |
+| `<= 6 GB` | `LOW_MEMORY` | Apply memory and concurrency controls. |
+| `> 6 GB` | `STANDARD` | Preserve standard component behavior; do not apply low-memory reductions. |
 
-The project uses GiB consistently in documentation. The implementation must define and test the exact byte threshold rather than compare rounded display strings.
+StudioDroid interprets the user's 6 GB threshold in decimal SI units: 6 GB = 6,000,000,000 bytes. The implementation must compare the exact byte count from Android's system API, never a rounded display string. This deliberately differs from 6 GiB (6,442,450,944 bytes).
 
 ## Detection
 
-Prefer Android's system-reported total memory, for example `ActivityManager.MemoryInfo.totalMem`. Record the source and confidence of the detected value.
+Prefer Android's system-reported total memory, for example `ActivityManager.MemoryInfo.totalMem`. Compare it to exactly 6,000,000,000 bytes. Record the source and confidence of the detected value.
 
 Supporting signals:
 - `ActivityManager.isLowRamDevice()`.
