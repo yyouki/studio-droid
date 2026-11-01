@@ -169,3 +169,12 @@ Before adopting an editor library, create an isolated Android sample and verify:
 The next proof of concept should compare Nemo and Sora in isolated Android sample apps. Nemo is the first candidate to evaluate because of its MIT license and native Compose integration; Sora is the feature-rich alternative if its LGPL-2.1 obligations are acceptable. This is a provisional test order, not a final adoption decision.
 
 No editor dependency should be added to the main StudioDroid app until the sample has passed the device and licensing gates above.
+
+
+## 7. Basic Android/ARM64 device smoke test
+
+The initial Nemo editor debug APK (before the workspace explorer and multi-tab expansion) was installed on Redmi 14C / Android 16. The maintainer reported successful Kotlin typing, document Open, Save As, and LOW_MEMORY indicator.
+
+This raises Nemo from an untested candidate to a **basic Android/ARM64 smoke-tested candidate**, but does not prove performance under large files, memory pressure, lifecycle recreation, or a full IDE workload. The new workspace version needs its own build and device regression test. Nemo remains an isolated prototype; production adoption is still blocked on dependency/license review and broader tests.
+
+See [Phase 1 device test](PHASE-1-DEVICE-TEST.md) and [workspace design](WORKSPACE-DESIGN.md).
