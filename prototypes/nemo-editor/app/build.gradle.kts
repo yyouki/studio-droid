@@ -37,4 +37,6 @@ dependencies {
 
     // Isolated MIT-licensed editor prototype; not yet adopted by the main application.
     implementation("io.github.ma7moud3ly:nemo-editor:2.0.0")
+    // Optional Nemo tab strip and per-document tab state manager.
+    implementation("io.github.ma7moud3ly:nemo-tabs:2.0.0")
 }
