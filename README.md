@@ -60,9 +60,9 @@ The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatfor
 
 ## Experimental Android editor prototype
 
-An isolated Nemo-based Android editor sample is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). It includes Kotlin editing, open/save through Android's document picker, Undo/Redo, and RAM-profile reporting. Its source is not yet approved for the production app, and an installable APK is not claimed until GitHub Actions finishes successfully and the app is tested on a physical phone.
+An isolated Nemo-based Android editor sample is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). It includes Kotlin editing, open/save through Android's document picker, Undo/Redo, and RAM-profile reporting. The first debug APK was built successfully by GitHub Actions and inspected as a valid APK archive. It has **not** yet been installed or tested on the Redmi 14C, and Nemo has not been adopted into the production app.
 
-Build status: [GitHub Actions](https://github.com/yyouki/studio-droid/actions/workflows/build-nemo-editor-prototype.yml).
+Latest build: [GitHub Actions run #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016).
 
 ## Documentation
 
