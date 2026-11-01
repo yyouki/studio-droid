@@ -152,3 +152,19 @@ The low-memory profile should schedule less concurrent indexing/build work and b
 11. [IntelliJ Platform open-source and licensing overview](https://www.jetbrains.com/opensource/intellij-platform/)
 12. [Historical tools/idea LICENSE.txt](https://android.googlesource.com/platform/tools/idea/+/refs/heads/studio-main/LICENSE.txt)
 13. [Historical tools/idea NOTICE.txt](https://android.googlesource.com/platform/tools/idea/+/refs/heads/studio-main/NOTICE.txt)
+
+
+## 8. Additional UI evidence: Compose in Android Studio is not Android Compose
+
+The current Android Studio plugin tree contains both `adt-ui` and `adt-ui-compose`.
+
+The `adt-ui-compose/README.md` describes `adt-ui-compose` as the Compose-based counterpart to the Swing-based `adt-ui` module. It also documents `StudioComposePanel`, which wraps a composable in a `JComponent` so that it can be embedded into a Studio tool window or dialog. Its test sample uses Compose Desktop and Jewel's standalone theme.
+
+The module's current `BUILD.bazel` depends on IntelliJ Platform Jewel modules, Skiko, and artifacts explicitly named `compose.foundation.desktop` and `compose.runtime.desktop`.
+
+**Implication:** this module is useful as evidence of Google's Compose adoption inside the desktop IDE, but it is not a ready-made Jetpack Compose Android UI library. We must implement the phone UI with Android-native Compose or Views, and may only reuse visual concepts or isolated algorithms after license and dependency review.
+
+Evidence:
+- [adt-ui-compose README](https://android.googlesource.com/platform/tools/adt/idea/+/refs/heads/mirror-goog-studio-main/adt-ui-compose/README.md)
+- [adt-ui-compose BUILD.bazel](https://android.googlesource.com/platform/tools/adt/idea/+/refs/heads/mirror-goog-studio-main/adt-ui-compose/BUILD.bazel)
+
