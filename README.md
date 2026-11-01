@@ -60,13 +60,14 @@ The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatfor
 
 ## Experimental Android editor prototype
 
-An isolated Nemo-based Android editor sample is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). It includes Kotlin editing, open/save through Android's document picker, Undo/Redo, and RAM-profile reporting. The first debug APK was built successfully by GitHub Actions and inspected as a valid APK archive. It has **not** yet been installed or tested on the Redmi 14C, and Nemo has not been adopted into the production app.
+An isolated Nemo-based Android editor sample is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). It includes Kotlin editing, open/save through Android's document picker, Undo/Redo, and RAM-profile reporting. The first debug APK was built successfully by GitHub Actions and inspected as a valid APK archive. It was installed and manually tested on the Redmi 14C / Android 16: Kotlin editing, Open, Save As, and the LOW_MEMORY indicator all passed according to the maintainer. Nemo remains an isolated prototype and has not yet been adopted into the production app.
 
 Latest build: [GitHub Actions run #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016).
 
 ## Documentation
 
 - [Claude AI review handoff](docs/CLAUDE-HANDOFF.md)
+- [Redmi 14C device test report](docs/PHASE-1-DEVICE-TEST.md)
 - [Phase 0 source and feasibility audit](docs/PHASE-0-AUDIT.md)
 - [Editor and toolchain portability review](docs/EDITOR-AND-TOOLCHAIN-PORTABILITY.md)
 - [Architecture](docs/ARCHITECTURE.md)
