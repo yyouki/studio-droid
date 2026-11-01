@@ -203,3 +203,16 @@ Evidence:
 - [Sora repository and LGPL-2.1 license](https://github.com/Rosemoe/sora-editor)
 - [Sora language/LSP modules](https://project-sora.github.io/sora-editor-docs/guide/getting-started)
 - [apksig project purpose](https://android.googlesource.com/platform/tools/apksig)
+
+
+## 11. Initial editor runtime verification
+
+The first isolated Nemo editor APK was installed and manually tested by the maintainer on a Xiaomi Redmi 14C running Android 16 (marketed 6 GB RAM). The maintainer reported PASS for:
+- Launching the editor and typing Kotlin.
+- Opening a document via the Android document picker.
+- Saving a document with Save As.
+- Displaying the `LOW_MEMORY` profile.
+
+This is basic evidence that Nemo's Android editor view and the host APK execute on the reference Android/ARM64 device. It is not a stress test, does not validate the new workspace/tab implementation, and does not establish compatibility for IntelliJ PSI, Gradle, Android Studio plugins, or the desktop IDE runtime.
+
+See [PHASE-1-DEVICE-TEST.md](PHASE-1-DEVICE-TEST.md). The next verification is the expanded SAF project-explorer/multi-tab build tracked in [issue #3](https://github.com/yyouki/studio-droid/issues/3).
