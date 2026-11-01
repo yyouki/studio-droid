@@ -6,7 +6,7 @@ Use this document as a task packet when asking Claude to review StudioDroid. Cha
 
 https://github.com/yyouki/studio-droid
 
-Current task area: SAF project explorer and multi-file tabs under `prototypes/nemo-editor/` (issue #3). The original single-file editor smoke test passed on the Redmi 14C / Android 16.
+Current task area: SAF project explorer and multi-file tabs under `prototypes/nemo-editor/` (issue #3). The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiles successfully in GitHub Actions run #10; physical-device verification remains pending.
 
 ## Product constraints
 
@@ -38,7 +38,7 @@ UI features in source:
 - Independent CodeState per file, dirty state, and write-back to document URI.
 - Reports device memory and the selected profile.
 
-Device smoke test of the initial version on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. The new SAF workspace/tab implementation has not yet been tested on-device. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
+Device smoke test of the initial version on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. The new SAF workspace/tab implementation has not yet been tested on-device. Its CI build succeeded in run #10 and the debug APK artifact was integrity-checked. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
 
 ## Requested Claude review
 
