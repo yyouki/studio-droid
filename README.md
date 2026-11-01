@@ -56,11 +56,12 @@ Android Studio's source build documentation identifies the Android plugin, Intel
 
 **Stage: Phase 0 — preliminary source audit.** The audit identifies the desktop UI, runtime, and host toolchain as major porting boundaries. No desktop source has been copied, no Android module has passed an ART/ARM64 compatibility test, and no APK is available yet.
 
-Read the [Phase 0 feasibility audit](docs/PHASE-0-AUDIT.md) before proposing source reuse.
+The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatform) and Sora Editor (LGPL-2.1, Android View, LSP/Tree-sitter modules). Neither has been added to the app. See the editor portability report before choosing an implementation.
 
 ## Documentation
 
 - [Phase 0 source and feasibility audit](docs/PHASE-0-AUDIT.md)
+- [Editor and toolchain portability review](docs/EDITOR-AND-TOOLCHAIN-PORTABILITY.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Memory profiles](docs/MEMORY-PROFILES.md)
 - [Roadmap](docs/ROADMAP.md)
