@@ -60,15 +60,16 @@ The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatfor
 
 ## Experimental Android editor prototype
 
-The isolated Nemo prototype is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). Its first version passed manual testing on the Redmi 14C / Android 16. The latest source now adds a SAF project explorer, directory navigation, multi-file tabs, per-tab editor state, dirty tracking, and save-back to document URIs. The updated workspace APK is being built and still requires a new device test. Nemo remains an isolated prototype and has not yet been adopted into the production app.
+The isolated Nemo prototype is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). Its first version passed manual testing on the Redmi 14C / Android 16. The latest source adds a SAF project explorer, directory navigation, multi-file tabs, per-tab editor state, dirty tracking, and save-back to document URIs. The workspace APK compiled successfully in GitHub Actions run #10 and its artifact was checked. The expanded workspace features still need physical-device testing. Nemo remains an isolated prototype and has not yet been adopted into the production app.
 
-[Latest workspace build run](https://github.com/yyouki/studio-droid/actions/runs/41347911409) · [Initial device-tested build run](https://github.com/yyouki/studio-droid/actions/runs/41334286016).
+[Latest workspace build run #10](https://github.com/yyouki/studio-droid/actions/runs/41348070224) · [Initial device-tested build run #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016).
 
 ## Documentation
 
 - [Claude AI review handoff](docs/CLAUDE-HANDOFF.md)
 - [Redmi 14C device test report](docs/PHASE-1-DEVICE-TEST.md)
 - [Workspace explorer and tab design](docs/WORKSPACE-DESIGN.md)
+- [Workspace APK device test checklist](docs/PHASE-2-WORKSPACE-TEST.md)
 - [Phase 0 source and feasibility audit](docs/PHASE-0-AUDIT.md)
 - [Editor and toolchain portability review](docs/EDITOR-AND-TOOLCHAIN-PORTABILITY.md)
 - [Architecture](docs/ARCHITECTURE.md)
