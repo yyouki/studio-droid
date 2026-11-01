@@ -41,7 +41,7 @@ The workflow only builds a debug APK. It does not sign a Play Store release.
 
 Initial version: [Build Nemo Editor Prototype #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016) succeeded, and its APK was installed and manually tested on Redmi 14C / Android 16. The maintainer reported PASS for Kotlin typing, Open, Save As, and LOW_MEMORY display.
 
-Workspace version: [Build run #8](https://github.com/yyouki/studio-droid/actions/runs/41347911409) is the first CI build of the project explorer and multi-tab changes. Do not install or test a new APK until this run has a successful conclusion and artifact.
+Workspace version: [Build run #10](https://github.com/yyouki/studio-droid/actions/runs/41348070224) succeeded. The uploaded artifact contains app-debug.apk (18,711,283 bytes). SHA-256: c20c2e1b5dea241aa9bd310b1e23d8b96c2df69ebc43603edeac37e37a1d8cb5. ZIP integrity and APK extraction were verified. The expanded workspace features are not yet tested on the Redmi 14C.
 
 ## Device test checklist
 
