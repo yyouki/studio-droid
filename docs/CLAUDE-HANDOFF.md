@@ -6,7 +6,7 @@ Use this document as a task packet when asking Claude to review StudioDroid. Cha
 
 https://github.com/yyouki/studio-droid
 
-Current task area: isolated Nemo editor prototype under `prototypes/nemo-editor/`.
+Current task area: SAF project explorer and multi-file tabs under `prototypes/nemo-editor/` (issue #3). The original single-file editor smoke test passed on the Redmi 14C / Android 16.
 
 ## Product constraints
 
@@ -29,27 +29,29 @@ Files:
 - `prototypes/nemo-editor/app/src/main/kotlin/dev/studiodroid/prototype/MainActivity.kt`
 - `.github/workflows/build-nemo-editor-prototype.yml`
 
-Editor dependency: Nemo Code Editor 2.0.0, MIT, Android Compose Multiplatform.
+Editor dependency: Nemo Code Editor 2.0.0, MIT, Android Compose Multiplatform. Tabs dependency: `io.github.ma7moud3ly:nemo-tabs:2.0.0` (same upstream MIT repository and release).
 
 UI features in source:
 - Kotlin editing with line numbers, indent guides, auto-indent and autocomplete.
-- Android Storage Access Framework open document and save as.
-- Undo and redo.
+- Single-document open and Save As through Android Storage Access Framework.
+- Folder selection, project listing, directory navigation, and multi-file tabs through Nemo Tabs.
+- Independent CodeState per file, dirty state, and write-back to document URI.
 - Reports device memory and the selected profile.
 
-Device smoke test on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
+Device smoke test of the initial version on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. The new SAF workspace/tab implementation has not yet been tested on-device. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
 
 ## Requested Claude review
 
-1. Inspect the latest main-branch version of all files above.
+1. Inspect the latest main-branch version of all files above, especially the updated `MainActivity.kt` and `nemo-tabs` dependency.
 2. Check imports and Nemo 2.0.0 API signatures against the tagged upstream source.
 3. Check Compose / AGP / Kotlin / Gradle version compatibility. The prototype copies the Nemo v2.0.0 toolchain: AGP 9.5.0, Gradle 9.7.1, Kotlin Compose plugin 2.4.21, Compose Multiplatform 1.12.2, Java 17, compileSdk 37 minor API 0.
 4. Review Android 16 file picker behavior, stream closing, coroutine dispatching, save behavior, and lifecycle handling.
 5. Check that the memory threshold is compared as an exact long byte value and that unknown values are not guessed.
 6. Review low-memory behavior claims: this prototype currently reports the profile only; it does not yet apply editor/build optimizations.
-7. Review the next workspace milestone plan: SAF folder access, project explorer, multi-file tabs, and independent CodeState instances.
-8. Identify likely compile/runtime errors and missing tests.
-9. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
+7. Review SAF URI permission persistence, DocumentsContract listing, directory navigation, and provider-specific behavior.
+8. Review Nemo Tabs integration, independent CodeState, duplicate-tab handling, dirty-close protection, and save-back behavior.
+9. Identify likely compile/runtime errors and missing tests.
+10. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
 
 ## Required response format
 
