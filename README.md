@@ -58,8 +58,15 @@ Android Studio's source build documentation identifies the Android plugin, Intel
 
 The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatform) and Sora Editor (LGPL-2.1, Android View, LSP/Tree-sitter modules). Neither has been added to the app. See the editor portability report before choosing an implementation.
 
+## Experimental Android editor prototype
+
+An isolated Nemo-based Android editor sample is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). It includes Kotlin editing, open/save through Android's document picker, Undo/Redo, and RAM-profile reporting. Its source is not yet approved for the production app, and an installable APK is not claimed until GitHub Actions finishes successfully and the app is tested on a physical phone.
+
+Build status: [GitHub Actions](https://github.com/yyouki/studio-droid/actions/workflows/build-nemo-editor-prototype.yml).
+
 ## Documentation
 
+- [Claude AI review handoff](docs/CLAUDE-HANDOFF.md)
 - [Phase 0 source and feasibility audit](docs/PHASE-0-AUDIT.md)
 - [Editor and toolchain portability review](docs/EDITOR-AND-TOOLCHAIN-PORTABILITY.md)
 - [Architecture](docs/ARCHITECTURE.md)
