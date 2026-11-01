@@ -18,8 +18,8 @@ The GitHub repository is the shared source of truth. Never assume another assist
 
 - Target is an installable Android application, not a desktop-only build.
 - The project investigates porting/adapting Android Studio Desktop and compatible IntelliJ components; it must not claim that desktop UI or plugins work unchanged on Android.
-- Devices with total RAM at or below 6 GiB use LOW_MEMORY by default.
-- Devices above 6 GiB use STANDARD by default, without the project's low-memory reductions.
+- Devices with total RAM at or below 6 GB use LOW_MEMORY by default.
+- Devices above 6 GB use STANDARD by default, without the project's low-memory reductions.
 - LOW_MEMORY must reduce resource pressure without silently removing supported IDE features.
 - The maintainer's reference device is a Redmi 14C with Android 16 and 6 GB RAM.
 
