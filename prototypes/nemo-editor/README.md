@@ -6,11 +6,13 @@ This is an **isolated evaluation app**, not the production StudioDroid applicati
 
 Evaluate [Nemo Code Editor](https://github.com/Ma7moud3ly/nemo-editor) v2.0.0 as an Android-native editing surface before adding any editor dependency to the main app.
 
-The prototype includes:
+The prototype currently includes:
 - Kotlin editor with line numbers, indentation guides, auto-indent, and autocomplete.
-- Open document through Android's Storage Access Framework.
-- Save as a text document through Android's Storage Access Framework.
-- Undo and redo.
+- Open a single document through Android's Storage Access Framework.
+- Select a workspace folder and browse directory entries using DocumentsContract.
+- Open multiple workspace files in separate tabs using Nemo Tabs.
+- Independent editor state and undo history per tab, with dirty indicators.
+- Save changes to the original document URI or use Save As for a scratch tab.
 - Device-reported RAM and the project's two-profile policy.
 
 ## Versions
@@ -37,7 +39,9 @@ These versions still need a real CI build. A configuration copied from an upstre
 
 The workflow only builds a debug APK. It does not sign a Play Store release.
 
-Latest verified run: [Build Nemo Editor Prototype #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016) — succeeded. The uploaded artifact contains app-debug.apk (18,678,515 bytes). SHA-256: 87621989c7e09abe2964f773630403fdc9e62c593156c92707f049c8bd5fbc73. The APK archive was checked successfully; installation and runtime behavior on a physical device are still unverified.
+Initial version: [Build Nemo Editor Prototype #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016) succeeded, and its APK was installed and manually tested on Redmi 14C / Android 16. The maintainer reported PASS for Kotlin typing, Open, Save As, and LOW_MEMORY display.
+
+Workspace version: [Build run #8](https://github.com/yyouki/studio-droid/actions/runs/41347911409) is the first CI build of the project explorer and multi-tab changes. Do not install or test a new APK until this run has a successful conclusion and artifact.
 
 ## Device test checklist
 
@@ -51,7 +55,7 @@ Latest verified run: [Build Nemo Editor Prototype #4](https://github.com/yyouki/
 - [ ] Test a source file with approximately 1,000 lines.
 - [ ] Record app responsiveness and peak memory use if possible.
 
-The maintainer reports that the first five device checks passed. See [the Phase 1 device test report](../../docs/PHASE-1-DEVICE-TEST.md).
+The maintainer reports that the first five device checks passed. See [the Phase 1 device test report](../../docs/PHASE-1-DEVICE-TEST.md). Workspace details are documented in [WORKSPACE-DESIGN.md](../../docs/WORKSPACE-DESIGN.md).
 
 ## Decision gate
 
