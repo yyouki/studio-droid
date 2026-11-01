@@ -10,6 +10,7 @@ Read these files before making project changes:
 - `docs/MEMORY-PROFILES.md`
 - `docs/ROADMAP.md`
 - `CONTRIBUTING.md`
+- `docs/CLAUDE-HANDOFF.md` when preparing or reviewing a task for Claude
 - `THIRD_PARTY_NOTICES.md`
 
 The GitHub repository is the shared source of truth. Never assume another assistant has seen private chat context. Include necessary context in the issue, pull request, or committed documentation.
