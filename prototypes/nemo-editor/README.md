@@ -37,6 +37,8 @@ These versions still need a real CI build. A configuration copied from an upstre
 
 The workflow only builds a debug APK. It does not sign a Play Store release.
 
+Latest verified run: [Build Nemo Editor Prototype #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016) — succeeded. The uploaded artifact contains app-debug.apk (18,678,515 bytes). SHA-256: 87621989c7e09abe2964f773630403fdc9e62c593156c92707f049c8bd5fbc73. The APK archive was checked successfully; installation and runtime behavior on a physical device are still unverified.
+
 ## Device test checklist
 
 - [ ] Install and launch on Redmi 14C / Android 16.
