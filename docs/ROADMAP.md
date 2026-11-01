@@ -16,31 +16,37 @@ This roadmap is evidence-driven. A phase is complete only when its acceptance cr
 - [ ] Complete current-branch license and notice audit for all candidate source modules.
 - [x] Add an isolated Nemo-based Android sample and GitHub Actions APK build workflow.
 - [x] Confirm the prototype CI build and inspect the produced APK.
-- [ ] Install and test the prototype on Redmi 14C.
+- [x] Install and test the prototype on Redmi 14C (manual smoke test; see [PHASE-1-DEVICE-TEST.md](PHASE-1-DEVICE-TEST.md)).
 - [ ] Test at least one candidate library on Android Runtime / ARM64.
 
-**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated into the production app or tested on the Redmi 14C. The isolated Nemo sample source exists and GitHub Actions run #4 completed successfully; the debug APK artifact was downloaded and checked as a valid APK archive. Physical-device testing on the Redmi 14C remains pending.
+**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated into the production app. The isolated Nemo sample source exists, GitHub Actions run #4 completed successfully, and the APK was installed and manually smoke-tested on Redmi 14C / Android 16. Kotlin editing, Open, Save As, and LOW_MEMORY indicator all passed according to the maintainer. Large-file, lifecycle, memory-pressure, and language-service tests remain pending.
 
 **Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence. At least one minimal Android/ART test validates the chosen editor component.
 
 ## Phase 1 — Android host proof of concept
 
-- [ ] Create a minimal Android application shell.
-- [ ] Verify application lifecycle and storage access.
-- [ ] Implement RAM detection and profile selection.
-- [ ] Add logging for profile decisions.
-- [ ] Build and install a debug APK on the Redmi 14C.
+- [x] Create a minimal Android application shell.
+- [x] Verify editor launch and basic document open/save flow on the reference phone.
+- [x] Implement RAM detection and profile selection.
+- [ ] Add persistent diagnostic logging for profile decisions.
+- [x] Build and install a debug APK on the Redmi 14C.
+- [ ] Test lifecycle recreation, external keyboard, and large-file behavior.
 
-**Exit criteria:** the app launches on the reference phone, selects LOW_MEMORY at 6 GB, and reports its decision accurately.
+**Progress:** The maintainer reports successful physical-device checks for Kotlin typing, Open, Save As, and LOW_MEMORY display on Redmi 14C / Android 16. See [PHASE-1-DEVICE-TEST.md](PHASE-1-DEVICE-TEST.md). The current app only reports the memory profile; actual resource-throttling policies are not implemented.
 
-## Phase 2 — Editor foundation
+**Exit criteria:** the app reliably launches on the reference phone, handles basic documents, selects LOW_MEMORY at the exact 6,000,000,000-byte threshold, and passes lifecycle and editor regression checks.
 
-- [ ] Select an editor component after license and Android-compatibility review.
-- [ ] Implement file open, edit, save, tabs, and basic navigation.
-- [ ] Add syntax highlighting for one language.
+## Phase 2 — Workspace and editor foundation
+
+- [x] Prove the Nemo editor candidate in an isolated Android APK on the reference device (manual smoke test).
+- [ ] Complete transitive dependency/license review before production adoption.
+- [ ] Add folder/workspace selection using Android Storage Access Framework.
+- [ ] Add a project explorer with directory navigation.
+- [ ] Add multi-file tabs with independent editor state and dirty indicators.
+- [ ] Add save/write-back to the selected workspace.
 - [ ] Test large files and lifecycle restoration.
 
-**Exit criteria:** a user can open, edit, save, close, and reopen a source file on the phone.
+**Exit criteria:** a user can select a project folder, browse files, open several source files in tabs, edit/save them, and restore the workspace after process recreation.
 
 ## Phase 3 — Project model and language support
 
