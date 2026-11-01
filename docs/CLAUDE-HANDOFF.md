@@ -37,7 +37,7 @@ UI features in source:
 - Undo and redo.
 - Reports device memory and the selected profile.
 
-No device testing has been performed yet.
+Device smoke test on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
 
 ## Requested Claude review
 
@@ -47,8 +47,9 @@ No device testing has been performed yet.
 4. Review Android 16 file picker behavior, stream closing, coroutine dispatching, save behavior, and lifecycle handling.
 5. Check that the memory threshold is compared as an exact long byte value and that unknown values are not guessed.
 6. Review low-memory behavior claims: this prototype currently reports the profile only; it does not yet apply editor/build optimizations.
-7. Identify likely compile/runtime errors and missing tests.
-8. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
+7. Review the next workspace milestone plan: SAF folder access, project explorer, multi-file tabs, and independent CodeState instances.
+8. Identify likely compile/runtime errors and missing tests.
+9. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
 
 ## Required response format
 
