@@ -15,11 +15,11 @@ This roadmap is evidence-driven. A phase is complete only when its acceptance cr
 - [ ] Complete module-level dependency and native-library mapping.
 - [ ] Complete current-branch license and notice audit for all candidate source modules.
 - [x] Add an isolated Nemo-based Android sample and GitHub Actions APK build workflow.
-- [ ] Confirm the prototype CI build and inspect the produced APK.
+- [x] Confirm the prototype CI build and inspect the produced APK.
 - [ ] Install and test the prototype on Redmi 14C.
 - [ ] Test at least one candidate library on Android Runtime / ARM64.
 
-**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated into the production app or tested on the Redmi 14C. The isolated Nemo sample source exists; its latest CI build is still pending, so no APK is claimed.
+**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated into the production app or tested on the Redmi 14C. The isolated Nemo sample source exists and GitHub Actions run #4 completed successfully; the debug APK artifact was downloaded and checked as a valid APK archive. Physical-device testing on the Redmi 14C remains pending.
 
 **Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence. At least one minimal Android/ART test validates the chosen editor component.
 
