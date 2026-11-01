@@ -9,14 +9,16 @@ This roadmap is evidence-driven. A phase is complete only when its acceptance cr
 - [x] Identify Android Studio source checkout areas and their roles.
 - [x] Capture preliminary manifest, Android plugin, and shared-tools source snapshots.
 - [x] Publish a preliminary compatibility matrix and major platform blockers.
+- [x] Inspect IntelliJ editor API / implementation for Swing and AWT coupling.
+- [x] Compare Android-native editor candidates and their licenses.
 - [ ] Sync the exact manifest and capture the precise current `tools/idea` project SHA.
 - [ ] Complete module-level dependency and native-library mapping.
 - [ ] Complete current-branch license and notice audit for all candidate source modules.
 - [ ] Test at least one candidate library on Android Runtime / ARM64.
 
-**Progress:** Preliminary audit published in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md). The report identifies the desktop UI, host toolchain, and runtime boundaries. Phase 0 remains open because exact source pinning, per-module dependency/license audits, and Android runtime tests are not yet complete.
+**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated or tested on the Redmi 14C.
 
-**Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence.
+**Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence. At least one minimal Android/ART test validates the chosen editor component.
 
 ## Phase 1 — Android host proof of concept
 
