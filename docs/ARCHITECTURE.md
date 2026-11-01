@@ -109,8 +109,8 @@ Do not copy the full Android Studio or IntelliJ source tree into this repository
 
 Two default profiles are required:
 
-- **Low-memory:** total physical RAM is at or below 6 GiB.
-- **Standard:** total physical RAM is above 6 GiB.
+- **Low-memory:** total physical RAM is at or below 6 GB.
+- **Standard:** total physical RAM is above 6 GB.
 
 The threshold is a product policy. Detection should use Android system information such as `ActivityManager.MemoryInfo.totalMem`; use `ActivityManager.isLowRamDevice()` and memory-class information as supporting signals and fallbacks. Temporary available-memory pressure may pause work safely, but must not permanently switch a standard device into the low-memory profile.
 
