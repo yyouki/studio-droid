@@ -6,7 +6,12 @@ plugins {
 
 android {
     namespace = "dev.studiodroid.prototype"
-    compileSdk = 37
+    // Android SDK 37 is published as platform 37.0; state the minor level explicitly.
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 0
+        }
+    }
 
     defaultConfig {
         applicationId = "dev.studiodroid.prototype"
