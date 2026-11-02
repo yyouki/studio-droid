@@ -54,15 +54,11 @@ Android Studio's source build documentation identifies the Android plugin, Intel
 
 ## Current status
 
-**Stage: Phase 0 — preliminary source audit.** The audit identifies the desktop UI, runtime, and host toolchain as major porting boundaries. No desktop source has been copied, no Android module has passed an ART/ARM64 compatibility test, and no APK is available yet.
+StudioDroid is being developed as **one Android-native IDE application**. Internal engineering tasks are split for implementation and verification, but they are not separate products or user-facing releases. The current app foundation includes a Compose code editor, document open/save, project-folder browsing, multi-file tabs, and workspace file operations. The latest change adds create, rename, and delete actions for project files and folders through Android's Storage Access Framework.
 
-The editor review currently compares Nemo Code Editor (MIT, Compose Multiplatform) and Sora Editor (LGPL-2.1, Android View, LSP/Tree-sitter modules). Neither has been added to the app. See the editor portability report before choosing an implementation.
+The editor and workspace foundation has not yet completed physical-device verification as a combined workflow. The initial editor-only build was manually tested on Redmi 14C / Android 16; the newer workspace and file-management behaviors still require device testing. GitHub Actions builds a debug APK from the current source. This is an early app foundation, not yet a complete Android IDE or an Android Studio port.
 
-## Experimental Android editor prototype
-
-The isolated Nemo prototype is available under [prototypes/nemo-editor](prototypes/nemo-editor/README.md). Its first version passed manual testing on the Redmi 14C / Android 16. The latest source adds a SAF project explorer, directory navigation, multi-file tabs, per-tab editor state, dirty tracking, and save-back to document URIs. The workspace APK compiled successfully in GitHub Actions run #10 and its artifact was checked. The expanded workspace features still need physical-device testing. Nemo remains an isolated prototype and has not yet been adopted into the production app.
-
-[Latest workspace build run #10](https://github.com/yyouki/studio-droid/actions/runs/41348070224) · [Initial device-tested build run #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016).
+The wider product still needs project restoration, robust editing workflows, language services, Gradle/JDK build execution, diagnostics, Git, and resource policies for LOW_MEMORY devices. The Android Studio / IntelliJ source audit remains useful for deciding which desktop features can be reused and which require Android-native implementations.
 
 ## Documentation
 
@@ -74,7 +70,7 @@ The isolated Nemo prototype is available under [prototypes/nemo-editor](prototyp
 - [Editor and toolchain portability review](docs/EDITOR-AND-TOOLCHAIN-PORTABILITY.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Memory profiles](docs/MEMORY-PROFILES.md)
-- [Roadmap](docs/ROADMAP.md)
+- [Product development plan](docs/ROADMAP.md)
 - [Contribution guide](CONTRIBUTING.md)
 - [AI agent instructions](AGENTS.md)
 - [Third-party source and license audit](THIRD_PARTY_NOTICES.md)
