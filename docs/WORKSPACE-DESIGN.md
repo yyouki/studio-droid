@@ -108,4 +108,10 @@ Renaming an open file updates that tab's name and document URI while preserving 
 - [ ] Test with a directory containing many files.
 - [ ] Test a Kotlin file with about 1,000 lines.
 - [ ] Reopen the same file and confirm it does not create duplicate tabs.
+- [ ] Create a file and verify it appears in the current directory.
+- [ ] Create a folder and navigate into it.
+- [ ] Rename a file that is not open.
+- [ ] Rename an open file and verify its tab still saves successfully.
+- [ ] Delete a closed file; verify an open file cannot be deleted.
+- [ ] Verify provider errors do not crash the app.
 
