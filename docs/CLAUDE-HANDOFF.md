@@ -35,6 +35,7 @@ UI features in source:
 - Kotlin editing with line numbers, indent guides, auto-indent and autocomplete.
 - Single-document open and Save As through Android Storage Access Framework.
 - Folder selection, project listing, directory navigation, and multi-file tabs through Nemo Tabs.
+- Persist selected workspace tree URI after confirmed Android persistent grant; restore root listing on launch after checking that grant.
 - Create file/folder, rename file/folder, and delete file/folder through DocumentsContract.
 - Renaming an open file updates its tab URI; deletion is blocked while the target is open.
 - Independent CodeState per file, dirty state, and write-back to document URI.
@@ -53,8 +54,9 @@ Device smoke test of the initial version on Redmi 14C / Android 16 was reported 
 7. Review SAF URI permission persistence, DocumentsContract listing, directory navigation, and provider-specific behavior.
 8. Review Nemo Tabs integration, independent CodeState, duplicate-tab handling, dirty-close protection, and save-back behavior.
 9. Review file/folder create, rename, and delete behavior across SAF providers, including URI changes after rename, directory deletion, and open-tab safeguards.
-10. Identify likely compile/runtime errors and missing tests.
-11. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
+10. Review workspace URI persistence and restoration, including grants revoked by the user or provider.
+11. Identify likely compile/runtime errors and missing tests.
+12. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
 
 ## Required response format
 
