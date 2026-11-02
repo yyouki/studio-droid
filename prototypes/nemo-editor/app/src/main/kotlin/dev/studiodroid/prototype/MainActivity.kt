@@ -420,7 +420,7 @@ private fun StudioDroidEditorScreen() {
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Android IDE workspace prototype",
+                        text = "Android-native development environment",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
