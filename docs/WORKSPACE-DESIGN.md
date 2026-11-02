@@ -1,6 +1,6 @@
 # Workspace and multi-document design
 
-**Status:** Prototype implementation in progress. The first single-file editor smoke test passed on Redmi 14C / Android 16. The workspace implementation has not yet been device-tested.
+**Status:** Android app foundation implemented in source. The initial single-file editor smoke test passed on Redmi 14C / Android 16. The workspace and file-management flows still require physical-device verification.
 
 ## Goals
 
@@ -23,6 +23,8 @@ Use Android's Storage Access Framework rather than broad shared-storage permissi
 3. Capture the root document ID through `DocumentsContract.getTreeDocumentId`.
 4. Query child documents using `buildChildDocumentsUriUsingTree`.
 5. Create document URIs through `buildDocumentUriUsingTree`.
+6. Create files and folders with `DocumentsContract.createDocument`.
+7. Rename and delete entries with `DocumentsContract.renameDocument` and `deleteDocument`.
 
 ### Directory model
 
@@ -69,6 +71,12 @@ Examples:
 
 Unknown extensions fall back to plain text.
 
+## Project file operations
+
+The explorer supports creating files and folders in the current directory, renaming entries, and deleting entries through the selected tree URI. Names are trimmed and rejected when empty or containing path separators. File MIME types are inferred from the extension, with `text/plain` as the fallback. A file currently open in an editor tab cannot be deleted until its tab is closed; this avoids leaving a live editor attached to a deleted URI. Provider behavior still varies, and non-empty directory deletion may be refused by the provider.
+
+Renaming an open file updates that tab's name and document URI while preserving its editor state. File and folder operations run off the main thread and refresh the visible directory after a successful operation.
+
 ## Save behavior
 
 - Existing documents are written using the tab's persisted document URI.
@@ -80,7 +88,7 @@ Unknown extensions fall back to plain text.
 ## Known limitations
 
 - Persisted workspace restoration after process death is not implemented yet.
-- New file/folder creation and rename/delete are not implemented.
+- Workspace restoration, unsaved-tab recovery, and recovery after process death are not implemented.
 - The explorer is a collapsible panel rather than a resizable desktop tree.
 - No Gradle project import or build execution exists yet.
 - Syntax highlighting does not equal PSI/LSP diagnostics or semantic completion.
