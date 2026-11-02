@@ -6,7 +6,7 @@ Use this document as a task packet when asking Claude to review StudioDroid. Cha
 
 https://github.com/yyouki/studio-droid
 
-Current task area: the unified editor/workspace application under `prototypes/nemo-editor/`. The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiled in run #10. The newest app source commit `4ae636efc753e15283e05a5f37721e497ddcbe2b` adds project-root restoration when the persisted SAF grant remains valid. [CI run #15](https://github.com/yyouki/studio-droid/actions/runs/41406161465) succeeded and produced an integrity-checked debug APK. Its physical-device verification remains pending.
+Current task area: the unified editor/workspace application under `prototypes/nemo-editor/`. The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiled in run #10. The newest app source commit `4ae636efc753e15283e05a5f37721e497ddcbe2b` adds project-root restoration when the persisted SAF grant remains valid. [CI run #20](https://github.com/yyouki/studio-droid/actions/runs/41406453235) succeeded and produced an integrity-checked `studio-droid-debug-apk` artifact. APK SHA-256: `f9f4d05999c5eefc1b165580ad7b7b942cd5e3cc0bf3ba6030abb1be88c4a458`. Its physical-device verification remains pending.
 
 ## Product constraints
 
