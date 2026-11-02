@@ -1,6 +1,6 @@
-# StudioDroid Nemo Editor Prototype
+# StudioDroid Android App
 
-This is the current Android-native StudioDroid application foundation. It is not proof that IntelliJ Platform or Android Studio Desktop has been ported to Android.
+This folder contains the current Android-native StudioDroid application source. It does not contain a port of IntelliJ Platform or Android Studio Desktop.
 
 ## Purpose
 
@@ -40,7 +40,7 @@ These versions still need a real CI build. A configuration copied from an upstre
 5. Download the prototype debug APK artifact.
 6. Install the APK on the Redmi 14C and test the cases below.
 
-The workflow only builds a debug APK. It does not sign a Play Store release.
+The workflow builds a debug APK for testing. It does not sign a Play Store release.
 
 Initial version: [Build Nemo Editor Prototype #4](https://github.com/yyouki/studio-droid/actions/runs/41334286016) succeeded, and its APK was installed and manually tested on Redmi 14C / Android 16. The maintainer reported PASS for Kotlin typing, Open, Save As, and LOW_MEMORY display.
 
