@@ -1,82 +1,63 @@
-# Roadmap
+# Product development plan
 
-This roadmap is evidence-driven. A phase is complete only when its acceptance criteria are met and recorded.
+StudioDroid is intended to become one integrated Android-native IDE. The work below describes capabilities of that single product; it is not a sequence of separate apps or releases.
 
-## Phase 0 — Feasibility and source audit
+## Application foundation
 
-- [x] Create public repository and initial product specification.
-- [x] Record the two-profile RAM policy.
-- [x] Identify Android Studio source checkout areas and their roles.
-- [x] Capture preliminary manifest, Android plugin, and shared-tools source snapshots.
-- [x] Publish a preliminary compatibility matrix and major platform blockers.
-- [x] Inspect IntelliJ editor API / implementation for Swing and AWT coupling.
-- [x] Compare Android-native editor candidates and their licenses.
-- [ ] Sync the exact manifest and capture the precise current `tools/idea` project SHA.
-- [ ] Complete module-level dependency and native-library mapping.
-- [ ] Complete current-branch license and notice audit for all candidate source modules.
-- [x] Add an isolated Nemo-based Android sample and GitHub Actions APK build workflow.
-- [x] Confirm the prototype CI build and inspect the produced APK.
-- [x] Install and test the prototype on Redmi 14C (manual smoke test; see [PHASE-1-DEVICE-TEST.md](PHASE-1-DEVICE-TEST.md)).
-- [x] Test Nemo Code Editor 2.0.0 on Android Runtime / ARM64 through manual Redmi 14C / Android 16 smoke test.
+- [x] Android-native Compose application shell.
+- [x] Kotlin editor surface with line numbers, indent guides, auto-indent, and autocomplete.
+- [x] Open documents and save to a selected destination using Android Storage Access Framework.
+- [x] Select a project folder and browse nested directories.
+- [x] Multi-file tabs with independent editor state and dirty indicators.
+- [x] Save edited workspace documents back to their original URI.
+- [x] Create project files and folders.
+- [x] Rename project files and folders.
+- [x] Delete project files and folders, with an open-tab safeguard.
+- [ ] Restore the selected workspace and editor tabs after process recreation.
+- [ ] Recover unsaved editor content safely after interruption.
+- [ ] Add robust Save / Discard / Cancel handling for dirty tabs.
 
-**Progress:** Preliminary source audit is in [PHASE-0-AUDIT.md](PHASE-0-AUDIT.md), and editor/toolchain comparisons are in [EDITOR-AND-TOOLCHAIN-PORTABILITY.md](EDITOR-AND-TOOLCHAIN-PORTABILITY.md). The editor API itself exposes Swing/AWT types; the desktop implementation is not a drop-in Android view. Nemo is the first candidate for an isolated Compose editor test; Sora is an alternative with LSP and Tree-sitter modules but LGPL-2.1. Neither library has been integrated into the production app. The isolated Nemo sample's initial APK was built and manually smoke-tested on Redmi 14C / Android 16. Kotlin editing, Open, Save As, and LOW_MEMORY indicator all passed according to the maintainer. The latest source expands the prototype with SAF folder browsing and tabs; its updated CI build and device test are pending. Large-file, lifecycle, memory-pressure, and language-service tests remain pending.
+The source currently builds through GitHub Actions. The editor-only app was manually smoke-tested on Redmi 14C / Android 16; workspace/file-operation behavior has not yet completed physical-device testing. Source completion and a CI build do not count as device acceptance.
 
-**Exit criteria:** a reviewed report identifies what can be reused, adapted, replaced, or cannot currently run on Android, with exact revisions, source paths, license findings, and evidence. At least one minimal Android/ART test validates the chosen editor component.
+## Project model and language intelligence
 
-## Phase 1 — Android host proof of concept
+- [ ] Detect Android and Kotlin project roots and parse Gradle settings/build files.
+- [ ] Build a project tree with Android-specific nodes and project metadata.
+- [ ] Add Kotlin language-server integration for diagnostics, completion, symbol lookup, and navigation.
+- [ ] Add language-service support for XML and common configuration files.
+- [ ] Keep syntax highlighting, parser results, and semantic diagnostics distinct in the UI.
+- [ ] Implement incremental indexing and bounded caches.
 
-- [x] Create a minimal Android application shell.
-- [x] Verify editor launch and basic document open/save flow on the reference phone.
-- [x] Implement RAM detection and profile selection.
-- [ ] Add persistent diagnostic logging for profile decisions.
-- [x] Build and install a debug APK on the Redmi 14C.
-- [ ] Test lifecycle recreation, external keyboard, and large-file behavior.
+## Build and runtime
 
-**Progress:** The maintainer reports successful physical-device checks for Kotlin typing, Open, Save As, and LOW_MEMORY display on Redmi 14C / Android 16. See [PHASE-1-DEVICE-TEST.md](PHASE-1-DEVICE-TEST.md). The current app only reports the memory profile; actual resource-throttling policies are not implemented.
+- [ ] Determine a reliable ARM64-compatible JDK and Gradle execution model.
+- [ ] Resolve Android SDK components without requiring the user to manually manage a desktop toolchain.
+- [ ] Execute Gradle sync and tasks with streaming logs and actionable errors.
+- [ ] Build and install a small Android sample APK.
+- [ ] Measure build memory, storage use, CPU time, and thermal behavior on the reference phone.
+- [ ] Apply the LOW_MEMORY policy to indexing, caches, and build concurrency while preserving supported features.
 
-**Exit criteria:** the app reliably launches on the reference phone, handles basic documents, selects LOW_MEMORY at the exact 6,000,000,000-byte threshold, and passes lifecycle and editor regression checks.
+## IDE interaction and developer tools
 
-## Phase 2 — Workspace and editor foundation
+- [ ] Improve navigation, search-in-project, replace, and symbol search.
+- [ ] Add terminal integration with an Android-compatible shell/runtime model.
+- [ ] Add Git status, diff, commit, branch, and conflict workflows.
+- [ ] Add debugging feasibility and a working Android-compatible debugger where possible.
+- [ ] Improve touch targets, keyboard shortcuts, external keyboard support, accessibility, and large-screen layouts.
 
-- [x] Prove the Nemo editor candidate in an isolated Android APK on the reference device (manual smoke test).
-- [ ] Complete transitive dependency/license review before production adoption.
-- [x] Implement folder/workspace selection using Android Storage Access Framework (source added; updated CI/device verification pending).
-- [x] Implement project explorer with directory navigation (source added; updated CI/device verification pending).
-- [x] Implement multi-file tabs with independent editor state and dirty indicators (Nemo Tabs module; source added, verification pending).
-- [x] Implement save/write-back to the selected document URI (source added; provider/device verification pending).
-- [ ] Test large files and lifecycle restoration.
+## Quality and release
 
-**Exit criteria:** after the updated APK passes CI and physical-device testing, a user can select a project folder, browse files, open several source files in tabs, edit/save them, and restore the workspace after process recreation.
+- [ ] Maintain automated build and regression tests.
+- [ ] Test lifecycle recreation, URI permission persistence, large projects, large files, and provider compatibility.
+- [ ] Verify all bundled dependencies, licenses, and notices.
+- [ ] Test on the Redmi 14C and additional Android devices / RAM profiles.
+- [ ] Publish versioned debug builds first, then a properly signed release when product quality and security review permit.
 
-## Phase 3 — Project model and language support
+## Engineering constraints
 
-- [ ] Open a small Gradle project.
-- [ ] Display project structure.
-- [ ] Add diagnostics and basic completion for one supported language.
-- [ ] Prove that required runtimes work on Android ARM64.
-
-**Exit criteria:** project structure and language features work for a documented sample project.
-
-## Phase 4 — Build integration
-
-- [ ] Detect or install a compatible JDK and Android SDK components.
-- [ ] Run a small Gradle task.
-- [ ] Build a sample APK.
-- [ ] Capture logs and actionable build errors.
-- [ ] Measure the LOW_MEMORY profile on the reference device.
-
-**Exit criteria:** the sample APK builds reproducibly and installs on a physical Android device.
-
-## Phase 5 — Advanced IDE capabilities
-
-- [ ] Debugging research and proof of concept.
-- [ ] Git integration.
-- [ ] Refactoring and advanced navigation.
-- [ ] Plugin compatibility research.
-- [ ] Accessibility, keyboard, touch, and large-screen improvements.
-
-**Exit criteria:** each capability has a tested compatibility statement; unsupported desktop plugins are not advertised as supported.
-
-## Release requirements
-
-No release should be described as an Android Studio port or usable IDE until the relevant features run on a physical Android device. Every release must include tested Android versions, supported ABIs, known limitations, and build provenance.
+- The user-facing product is a single integrated IDE; implementation details should not require the user to install separate component prototypes.
+- Android Studio Desktop and IntelliJ editor APIs are not assumed to run unchanged on Android because of Swing/AWT, platform-service, filesystem, runtime, and toolchain dependencies.
+- The reference device is Xiaomi Redmi 14C / Android 16 with marketed 6 GB RAM. The profile threshold is exactly 6,000,000,000 bytes; LOW_MEMORY applies at or below the threshold.
+- LOW_MEMORY may reduce background concurrency and cache sizes, but must not silently remove supported editor features.
+- Builds may run in GitHub Actions because the maintainer's development device is an Android phone.
+- A CI artifact is not described as device-tested until it has been installed and exercised on real hardware.
