@@ -59,6 +59,8 @@ import java.io.IOException
 import java.util.Locale
 
 private const val LOW_MEMORY_LIMIT_BYTES = 6_000_000_000L
+private const val WORKSPACE_PREFERENCES = "studio_droid_workspace"
+private const val KEY_WORKSPACE_TREE_URI = "workspace_tree_uri"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,6 +121,45 @@ private fun StudioDroidEditorScreen() {
         }
     }
 
+    // Restore the last project only when Android still grants persistent tree access.
+    LaunchedEffect(Unit) {
+        val preferences = context.getSharedPreferences(
+            WORKSPACE_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+        val savedUri = preferences.getString(KEY_WORKSPACE_TREE_URI, null)
+        if (!savedUri.isNullOrBlank()) {
+            val restoredUri = Uri.parse(savedUri)
+            val hasReadGrant = context.contentResolver.persistedUriPermissions.any {
+                it.uri == restoredUri && it.isReadPermission
+            }
+
+            if (!hasReadGrant) {
+                preferences.edit().remove(KEY_WORKSPACE_TREE_URI).apply()
+                status = "Project access expired. Select the project folder again."
+            } else {
+                try {
+                    val restoredRootId = DocumentsContract.getTreeDocumentId(restoredUri)
+                    workspaceUri = restoredUri
+                    rootDocumentId = restoredRootId
+                    workspaceName = queryDisplayName(
+                        context,
+                        DocumentsContract.buildDocumentUriUsingTree(
+                            restoredUri,
+                            restoredRootId
+                        )
+                    )
+                    refreshFolder(restoredUri, restoredRootId)
+                    showExplorer = true
+                    status = "Restored project " + workspaceName
+                } catch (error: Exception) {
+                    status = "Project restore failed: " +
+                        (error.message ?: "select the project folder again")
+                }
+            }
+        }
+    }
+
     suspend fun refreshFolder(treeUri: Uri, documentId: String) {
         folderEntries = withContext(Dispatchers.IO) {
             listWorkspaceChildren(context, treeUri, documentId)
@@ -174,13 +215,28 @@ private fun StudioDroidEditorScreen() {
         contract = ActivityResultContracts.OpenDocumentTree()
     ) { uri: Uri? ->
         if (uri != null) {
-            try {
+            val persistentAccess = try {
                 context.contentResolver.takePersistableUriPermission(
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 )
+                context.contentResolver.persistedUriPermissions.any {
+                    it.uri == uri && it.isReadPermission
+                }
             } catch (_: SecurityException) {
-                // Keep using the provider's current-session grant when persistence is unavailable.
+                // Some providers grant access only for this session.
+                false
+            }
+
+            val preferences = context.getSharedPreferences(
+                WORKSPACE_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+            if (persistentAccess) {
+                preferences.edit().putString(KEY_WORKSPACE_TREE_URI, uri.toString()).apply()
+            } else {
+                // Avoid restoring a URI that will no longer be accessible after process death.
+                preferences.edit().remove(KEY_WORKSPACE_TREE_URI).apply()
             }
 
             val rootId = DocumentsContract.getTreeDocumentId(uri)
@@ -196,7 +252,11 @@ private fun StudioDroidEditorScreen() {
                 try {
                     refreshFolder(uri, rootId)
                     showExplorer = true
-                    status = "Project opened"
+                    status = if (persistentAccess) {
+                        "Project opened"
+                    } else {
+                        "Project opened for this session only"
+                    }
                 } catch (error: Exception) {
                     folderEntries = emptyList()
                     status = "Project error: " + (error.message ?: "unknown error")
