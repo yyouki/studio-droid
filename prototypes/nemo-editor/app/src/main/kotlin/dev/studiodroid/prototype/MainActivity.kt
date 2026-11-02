@@ -121,6 +121,13 @@ private fun StudioDroidEditorScreen() {
         }
     }
 
+    suspend fun refreshFolder(treeUri: Uri, documentId: String) {
+        folderEntries = withContext(Dispatchers.IO) {
+            listWorkspaceChildren(context, treeUri, documentId)
+        }
+    }
+
+
     // Restore the last project only when Android still grants persistent tree access.
     LaunchedEffect(Unit) {
         val preferences = context.getSharedPreferences(
@@ -157,12 +164,6 @@ private fun StudioDroidEditorScreen() {
                         (error.message ?: "select the project folder again")
                 }
             }
-        }
-    }
-
-    suspend fun refreshFolder(treeUri: Uri, documentId: String) {
-        folderEntries = withContext(Dispatchers.IO) {
-            listWorkspaceChildren(context, treeUri, documentId)
         }
     }
 
