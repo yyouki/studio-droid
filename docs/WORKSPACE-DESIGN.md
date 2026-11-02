@@ -29,7 +29,7 @@ Use Android's Storage Access Framework rather than broad shared-storage permissi
 ### Directory model
 
 The UI stores:
-- Workspace tree URI.
+- Workspace tree URI (also saved in private app preferences when a persistent grant is available).
 - Root document ID.
 - Current directory stack (document IDs plus display names).
 - Current folder entries (ID, display name, MIME type, URI).
@@ -41,6 +41,8 @@ Directory listing, document reads, and document writes must execute on `Dispatch
 Each opened document uses its tree/document URI string as a stable tab path. Reopening an already-open document selects the existing tab instead of creating a duplicate.
 
 Storage providers vary. Some may not support persistent grants, reliable write streams, sorting, or every optional column. Errors must be surfaced to the user without crashing the editor.
+
+The last selected tree URI is stored in private app preferences only after Android confirms a persisted read grant. On launch, the app checks `persistedUriPermissions` before restoring the root listing. If access is no longer valid, it clears the saved URI and asks the user to select the folder again. The current directory stack and open editor tabs are not restored yet.
 
 ## Tab model
 
@@ -87,7 +89,7 @@ Renaming an open file updates that tab's name and document URI while preserving 
 
 ## Known limitations
 
-- Persisted workspace restoration after process death is not implemented yet.
+- Current-directory navigation and open editor tabs are not restored after process death; only the project root URI is restored.
 - Workspace restoration, unsaved-tab recovery, and recovery after process death are not implemented.
 - The explorer is a collapsible panel rather than a resizable desktop tree.
 - No Gradle project import or build execution exists yet.
