@@ -6,7 +6,7 @@ Use this document as a task packet when asking Claude to review StudioDroid. Cha
 
 https://github.com/yyouki/studio-droid
 
-Current task area: the unified editor/workspace application under `prototypes/nemo-editor/`. The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiled in run #10. The newest commit adds create/rename/delete project operations; its CI run is in progress and its physical-device verification remains pending.
+Current task area: the unified editor/workspace application under `prototypes/nemo-editor/`. The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiled in run #10. The newest app commit `98a8e2d24df33e382042f59abf1c900c182c8387` adds create/rename/delete project operations; [CI run #12](https://github.com/yyouki/studio-droid/actions/runs/41405796421) succeeded and produced an integrity-checked debug APK. Its physical-device verification remains pending.
 
 ## Product constraints
 
@@ -40,7 +40,7 @@ UI features in source:
 - Independent CodeState per file, dirty state, and write-back to document URI.
 - Reports device memory and the selected profile.
 
-Device smoke test of the initial version on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. The new SAF workspace/tab implementation has not yet been tested on-device. Its CI build succeeded in run #10 and the debug APK artifact was integrity-checked. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
+Device smoke test of the initial version on Redmi 14C / Android 16 was reported as PASS for Kotlin typing, Open, Save As, and LOW_MEMORY indicator. See `docs/PHASE-1-DEVICE-TEST.md`. The SAF workspace/tab implementation has not yet been tested on-device. Run #10 passed, and the newer file-management implementation passed run #12; both artifacts were integrity-checked. Large-file, lifecycle, keyboard, and memory-use testing remain pending.
 
 ## Requested Claude review
 
