@@ -9,7 +9,7 @@ Evaluate [Nemo Code Editor](https://github.com/Ma7moud3ly/nemo-editor) v2.0.0 as
 The current app foundation includes:
 - Kotlin editor with line numbers, indentation guides, auto-indent, and autocomplete.
 - Open a single document through Android's Storage Access Framework.
-- Select a workspace folder and browse directory entries using DocumentsContract.
+- Select a workspace folder, restore its URI after app restart when a persistent SAF grant remains valid, and browse directory entries using DocumentsContract.
 - Open multiple workspace files in separate tabs using Nemo Tabs.
 - Independent editor state and undo history per tab, with dirty indicators.
 - Save changes to the original document URI or use Save As for a scratch tab.
@@ -59,6 +59,8 @@ Workspace/file-management version: [Build run #12](https://github.com/yyouki/stu
 - [ ] Confirm deletion is blocked while the target file is open; close it and delete it.
 - [ ] Confirm provider errors (for example, deleting a non-empty folder) are shown without crashing.
 - [ ] Save the edited content as a new text document.
+- [ ] Reopen the app and confirm the last selected project root is restored.
+- [ ] Revoke folder access in Android settings/provider and confirm the app asks to select the folder again.
 - [ ] Rotate the phone and reopen the app.
 - [ ] Test an external keyboard if available.
 - [ ] Test a source file with approximately 1,000 lines.
