@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +31,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -97,6 +99,8 @@ private fun StudioDroidEditorScreen() {
     var folderEntries by remember { mutableStateOf(emptyList<WorkspaceEntry>()) }
     var showExplorer by remember { mutableStateOf(true) }
     var savingTabId by remember { mutableStateOf<String?>(null) }
+    var explorerDialog by remember { mutableStateOf<ExplorerDialogState?>(null) }
+    var dialogName by remember { mutableStateOf("") }
 
     // Add a scratch tab so a new installation opens directly into an editor.
     LaunchedEffect(tabsManager) {
@@ -260,6 +264,78 @@ private fun StudioDroidEditorScreen() {
         }
     }
 
+    suspend fun applyExplorerAction(dialog: ExplorerDialogState, inputName: String) {
+        val tree = workspaceUri ?: throw IOException("Select a project folder first")
+        val parentId = folderStack.lastOrNull()?.documentId ?: rootDocumentId
+            ?: throw IOException("Project folder is unavailable")
+        val resolver = context.contentResolver
+        val entry = dialog.entry
+
+        when (dialog.action) {
+            ExplorerAction.CREATE_FILE -> {
+                val name = validateEntryName(inputName)
+                val parentUri = DocumentsContract.buildDocumentUriUsingTree(tree, parentId)
+                val createdUri = withContext(Dispatchers.IO) {
+                    DocumentsContract.createDocument(
+                        resolver,
+                        parentUri,
+                        mimeTypeForFile(name),
+                        name
+                    ) ?: throw IOException("The storage provider did not create the file")
+                }
+                refreshFolder(tree, parentId)
+                openFile(createdUri, name)
+                status = "Created " + name
+            }
+
+            ExplorerAction.CREATE_FOLDER -> {
+                val name = validateEntryName(inputName)
+                val parentUri = DocumentsContract.buildDocumentUriUsingTree(tree, parentId)
+                withContext(Dispatchers.IO) {
+                    DocumentsContract.createDocument(
+                        resolver,
+                        parentUri,
+                        DocumentsContract.Document.MIME_TYPE_DIR,
+                        name
+                    ) ?: throw IOException("The storage provider did not create the folder")
+                }
+                refreshFolder(tree, parentId)
+                status = "Created folder " + name
+            }
+
+            ExplorerAction.RENAME -> {
+                val target = entry ?: throw IOException("No file selected")
+                val name = validateEntryName(inputName)
+                val renamedUri = withContext(Dispatchers.IO) {
+                    DocumentsContract.renameDocument(resolver, target.uri, name)
+                        ?: throw IOException("The storage provider could not rename this item")
+                }
+                tabsManager.findTab(target.uri.toString())?.let { tab ->
+                    tabsManager.updateTab(
+                        tab.id,
+                        WorkspaceTabFile(name, renamedUri.toString())
+                    )
+                }
+                refreshFolder(tree, parentId)
+                status = "Renamed to " + name
+            }
+
+            ExplorerAction.DELETE -> {
+                val target = entry ?: throw IOException("No file selected")
+                // Do not leave an editor tab pointing at a document that has been deleted.
+                if (tabsManager.findTab(target.uri.toString()) != null) {
+                    throw IOException("Close this item's editor tab before deleting it")
+                }
+                val deleted = withContext(Dispatchers.IO) {
+                    DocumentsContract.deleteDocument(resolver, target.uri)
+                }
+                if (!deleted) throw IOException("The storage provider refused to delete this item")
+                refreshFolder(tree, parentId)
+                status = "Deleted " + target.name
+            }
+        }
+    }
+
     val currentFolder = folderStack.lastOrNull()
     val currentFolderId = currentFolder?.documentId ?: rootDocumentId
     val currentFolderName = currentFolder?.name ?: workspaceName
@@ -389,6 +465,26 @@ private fun StudioDroidEditorScreen() {
                     }
                 }
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    TextButton(
+                        onClick = {
+                            dialogName = "NewFile.kt"
+                            explorerDialog = ExplorerDialogState(ExplorerAction.CREATE_FILE)
+                        }
+                    ) { Text("New file") }
+                    TextButton(
+                        onClick = {
+                            dialogName = "NewFolder"
+                            explorerDialog = ExplorerDialogState(ExplorerAction.CREATE_FOLDER)
+                        }
+                    ) { Text("New folder") }
+                }
+
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -396,37 +492,55 @@ private fun StudioDroidEditorScreen() {
                         .padding(horizontal = 8.dp)
                 ) {
                     items(folderEntries, key = { it.documentId }) { entry ->
-                        TextButton(
-                            onClick = {
-                                val tree = workspaceUri ?: return@TextButton
-                                if (entry.isDirectory) {
-                                    folderStack = folderStack + WorkspaceFolder(
-                                        entry.documentId,
-                                        entry.name
-                                    )
-                                    status = "Loading " + entry.name + "..."
-                                    scope.launch {
-                                        try {
-                                            refreshFolder(tree, entry.documentId)
-                                            status = "Folder opened"
-                                        } catch (error: Exception) {
-                                            status = "Folder error: " + (error.message ?: "unknown error")
-                                        }
-                                    }
-                                } else {
-                                    openFile(entry.uri, entry.name)
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(modifier = Modifier.fillMaxWidth()) {
-                                Text(if (entry.isDirectory) "▸  " else "   ")
-                                Text(
-                                    text = entry.name,
-                                    maxLines = 1,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
+                            TextButton(
+                                onClick = {
+                                    val tree = workspaceUri ?: return@TextButton
+                                    if (entry.isDirectory) {
+                                        folderStack = folderStack + WorkspaceFolder(
+                                            entry.documentId,
+                                            entry.name
+                                        )
+                                        status = "Loading " + entry.name + "..."
+                                        scope.launch {
+                                            try {
+                                                refreshFolder(tree, entry.documentId)
+                                                status = "Folder opened"
+                                            } catch (error: Exception) {
+                                                status = "Folder error: " + (error.message ?: "unknown error")
+                                            }
+                                        }
+                                    } else {
+                                        openFile(entry.uri, entry.name)
+                                    }
+                                },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Row(modifier = Modifier.fillMaxWidth()) {
+                                    Text(if (entry.isDirectory) "▸  " else "   ")
+                                    Text(
+                                        text = entry.name,
+                                        maxLines = 1,
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
                             }
+                            TextButton(onClick = {
+                                dialogName = entry.name
+                                explorerDialog = ExplorerDialogState(
+                                    ExplorerAction.RENAME,
+                                    entry
+                                )
+                            }) { Text("Rename") }
+                            TextButton(onClick = {
+                                explorerDialog = ExplorerDialogState(
+                                    ExplorerAction.DELETE,
+                                    entry
+                                )
+                            }) { Text("Delete") }
                         }
                     }
                 }
@@ -493,7 +607,72 @@ private fun StudioDroidEditorScreen() {
             }
         }
     }
+
+    val activeDialog = explorerDialog
+    if (activeDialog != null) {
+        val title = when (activeDialog.action) {
+            ExplorerAction.CREATE_FILE -> "Create file"
+            ExplorerAction.CREATE_FOLDER -> "Create folder"
+            ExplorerAction.RENAME -> "Rename item"
+            ExplorerAction.DELETE -> "Delete item?"
+        }
+        AlertDialog(
+            onDismissRequest = { explorerDialog = null },
+            title = { Text(title) },
+            text = {
+                if (activeDialog.action == ExplorerAction.DELETE) {
+                    Text(
+                        "Delete \"" + (activeDialog.entry?.name ?: "item") +
+                            "\"? This cannot be undone."
+                    )
+                } else {
+                    TextField(
+                        value = dialogName,
+                        onValueChange = { dialogName = it },
+                        singleLine = true,
+                        label = { Text("Name") }
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    val action = activeDialog
+                    val name = dialogName
+                    if (action.action != ExplorerAction.DELETE && name.isBlank()) {
+                        status = "Name cannot be empty"
+                    } else {
+                        scope.launch {
+                            try {
+                                applyExplorerAction(action, name)
+                                explorerDialog = null
+                            } catch (error: Exception) {
+                                status = "File operation failed: " +
+                                    (error.message ?: "unknown error")
+                            }
+                        }
+                    }
+                }) {
+                    Text(if (activeDialog.action == ExplorerAction.DELETE) "Delete" else "Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { explorerDialog = null }) { Text("Cancel") }
+            }
+        )
+    }
 }
+
+private enum class ExplorerAction {
+    CREATE_FILE,
+    CREATE_FOLDER,
+    RENAME,
+    DELETE
+}
+
+private data class ExplorerDialogState(
+    val action: ExplorerAction,
+    val entry: WorkspaceEntry? = null
+)
 
 private data class WorkspaceTabFile(
     override val name: String,
@@ -559,6 +738,23 @@ private suspend fun listWorkspaceChildren(
     return entries.sortedWith(
         compareBy<WorkspaceEntry>({ !it.isDirectory }, { it.name.lowercase(Locale.ROOT) })
     )
+}
+
+private fun validateEntryName(rawName: String): String {
+    val name = rawName.trim()
+    require(name.isNotEmpty()) { "Name cannot be empty" }
+    require('/' !in name && '\\' !in name && '\u0000' !in name) {
+        "Name cannot contain path separators"
+    }
+    require(name != "." && name != "..") { "Invalid file or folder name" }
+    return name
+}
+
+private fun mimeTypeForFile(name: String): String {
+    val extension = name.substringAfterLast('.', "").lowercase(Locale.ROOT)
+    return android.webkit.MimeTypeMap.getSingleton()
+        .getMimeTypeFromExtension(extension)
+        ?: "text/plain"
 }
 
 private data class MemoryStatus(
