@@ -34,10 +34,10 @@ These versions still need a real CI build. A configuration copied from an upstre
 ## Build with GitHub Actions
 
 1. Open the repository's Actions tab.
-2. Select **Build Nemo Editor Prototype**.
+2. Select **Build StudioDroid Android App**.
 3. Press **Run workflow** on the main branch.
 4. Open the completed workflow run.
-5. Download the prototype debug APK artifact.
+5. Download the `studio-droid-debug-apk` artifact.
 6. Install the APK on the Redmi 14C and test the cases below.
 
 The workflow builds a debug APK for testing. It does not sign a Play Store release.
