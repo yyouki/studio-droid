@@ -6,7 +6,7 @@ Use this document as a task packet when asking Claude to review StudioDroid. Cha
 
 https://github.com/yyouki/studio-droid
 
-Current task area: SAF project explorer and multi-file tabs under `prototypes/nemo-editor/` (issue #3). The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiles successfully in GitHub Actions run #10; physical-device verification remains pending.
+Current task area: the unified editor/workspace application under `prototypes/nemo-editor/`. The original single-file editor smoke test passed on the Redmi 14C / Android 16. Workspace source compiled in run #10. The newest commit adds create/rename/delete project operations; its CI run is in progress and its physical-device verification remains pending.
 
 ## Product constraints
 
@@ -35,6 +35,8 @@ UI features in source:
 - Kotlin editing with line numbers, indent guides, auto-indent and autocomplete.
 - Single-document open and Save As through Android Storage Access Framework.
 - Folder selection, project listing, directory navigation, and multi-file tabs through Nemo Tabs.
+- Create file/folder, rename file/folder, and delete file/folder through DocumentsContract.
+- Renaming an open file updates its tab URI; deletion is blocked while the target is open.
 - Independent CodeState per file, dirty state, and write-back to document URI.
 - Reports device memory and the selected profile.
 
@@ -50,8 +52,9 @@ Device smoke test of the initial version on Redmi 14C / Android 16 was reported 
 6. Review low-memory behavior claims: this prototype currently reports the profile only; it does not yet apply editor/build optimizations.
 7. Review SAF URI permission persistence, DocumentsContract listing, directory navigation, and provider-specific behavior.
 8. Review Nemo Tabs integration, independent CodeState, duplicate-tab handling, dirty-close protection, and save-back behavior.
-9. Identify likely compile/runtime errors and missing tests.
-10. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
+9. Review file/folder create, rename, and delete behavior across SAF providers, including URI changes after rename, directory deletion, and open-tab safeguards.
+10. Identify likely compile/runtime errors and missing tests.
+11. Suggest a minimal, focused patch. Do not rewrite unrelated architecture or add new dependencies without explaining why.
 
 ## Required response format
 
