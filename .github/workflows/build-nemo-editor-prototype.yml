@@ -1,4 +1,4 @@
-name: Build Nemo Editor Prototype
+name: Build StudioDroid Android App
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: studio-droid-nemo-prototype-debug-apk
+          name: studio-droid-debug-apk
           path: prototypes/nemo-editor/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
