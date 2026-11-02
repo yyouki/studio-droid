@@ -13,8 +13,8 @@ StudioDroid is intended to become one integrated Android-native IDE. The work be
 - [x] Create project files and folders.
 - [x] Rename project files and folders.
 - [x] Delete project files and folders, with an open-tab safeguard.
-- [ ] Restore the selected workspace and editor tabs after process recreation.
-- [ ] Recover unsaved editor content safely after interruption.
+- [x] Restore the selected project folder URI after process recreation when Android's persisted permission remains available.
+- [ ] Restore open editor tabs and recover unsaved editor content after interruption.
 - [ ] Add robust Save / Discard / Cancel handling for dirty tabs.
 
 The source currently builds through GitHub Actions. The editor-only app was manually smoke-tested on Redmi 14C / Android 16; workspace/file-operation behavior has not yet completed physical-device testing. Source completion and a CI build do not count as device acceptance.
