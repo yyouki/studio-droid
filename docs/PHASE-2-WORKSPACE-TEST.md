@@ -70,3 +70,15 @@ StudioDroidTest/
 - Dirty tabs are blocked from closing, but a Save / Discard / Cancel dialog is not implemented yet.
 - Language modes are selected by filename extension; this is syntax-highlighting selection, not semantic IDE analysis.
 - No Gradle project import/build, IntelliJ PSI, or LSP language server is included yet.
+
+
+## File management checks
+
+- [ ] Create a Kotlin file in the project root and confirm it opens in a new tab.
+- [ ] Create a nested folder and confirm it appears in the explorer.
+- [ ] Rename a closed file and verify its new name in the listing.
+- [ ] Rename an open file, edit it, save it, and verify the renamed document contains the changes.
+- [ ] Confirm deleting an open document is blocked.
+- [ ] Close the document tab and delete the file successfully.
+- [ ] Try deleting a non-empty folder and confirm the app displays the provider's refusal without crashing.
+- [ ] Confirm a provider error leaves the directory listing usable.
